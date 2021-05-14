@@ -34,7 +34,8 @@ set cmdheight=2                 " 设置命令行的高度
 set showcmd                     " select模式下显示选中的行数
 set ruler                       " 总是显示光标位置
 set laststatus=2                " 总是显示状态栏
-set relativenumber              " 开启行号显示
+set relativenumber              " 开启相对行号显示
+set number                      " 开启行号显示
 set cursorline                  " 高亮显示当前行
 set whichwrap+=<,>,h,l          " 设置光标键跨行
 set ttimeoutlen=0               " 设置<ESC>键响应时间
@@ -170,9 +171,9 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'                        " 文件树菜单
 Plugin 'vim-airline/vim-airline'                    " 导航栏
 Plugin 'jiangmiao/auto-pairs'                       " 括号补全
-Plugin 'chrisbra/csv.vim'                           " 处理csv文件
+"Plugin 'chrisbra/csv.vim'                           " 处理csv文件
 
-Plugin 'morhetz/gruvbox'			                " 主题
+"Plugin 'morhetz/gruvbox'			                " 主题
 Plugin 'rakr/vim-one'
 call vundle#end()            " 必须
 
