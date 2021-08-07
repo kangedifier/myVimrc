@@ -8,13 +8,9 @@
 - vim管理工具:Vundle
 
 ## 插件列表
-
-- nerdtree 
+ 
 - vim-airline
 - auto-pairs
-- csv.vim
 - colorscheme
   - vim-one
   - gruvbox: 在终端下需要进行额外的配置，不然颜色会有问题 https://github.com/morhetz/gruvbox/wiki/Terminal-specific
-
-
