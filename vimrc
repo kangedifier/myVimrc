@@ -54,11 +54,12 @@ set tabstop=4                   " 设置编辑时制表符占用空格数
 set shiftwidth=4                " 设置格式化时制表符占用空格数
 set softtabstop=4               " 设置4个空格为制表符
 set smarttab                    " 在行和段开始处使用制表符
-set nowrap                      " 禁止折行
 set backspace=2                 " 使用回车键正常处理indent,eol,start等
-set sidescroll=10               " 设置向右滚动字符数
-set nofoldenable                " 禁用折叠代码
-
+"set sidescroll=10               " 设置向右滚动字符数
+"set nofoldenable                " 禁用折叠代码
+set wrap                        " 当一行过长时换行显示
+set linebreak                   " 换行显示时不会将单词分开
+set conceallevel=2              " 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码补全
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -93,8 +94,7 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 主题设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-autocmd vimenter * ++nested colorscheme one
+autocmd vimenter * ++nested colorscheme one 
 set background=light
 let g:one_allow_italics=1
 let g:airline_theme='one'
@@ -109,35 +109,45 @@ map <c-k> <c-w>k
 map <c-h> <c-w>h
 map <c-l> <c-w>l
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 开启拼写检查
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>s :set spell<CR>:hi SpellBad cterm=underline<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Netrw - vim's builtin file explorer
+" 参考链接 https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:netrw_keepdir = 0                         " keep the current directory and the browsing directory synced
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'  " Hide dotfiles on load.
+
+" Netrw is a plugin that defines its own filetype, so we are going to use that to our advantage. What we are going to do is place our keymaps inside a function and create an autocommand that calls it everytime vim opens a filetype netrw.
+" h: go up a directory
+" l: open a directory or file
+" .: toggle the dotfiles
+" P: close the preview window
+" <leader>n : open or close the Netrw
+
+nnoremap <leader>n :Explore <CR>                " open the Netrw
+" nnoremap <leader>dd :Lexplore %:p:h<CR>       " Will open Netrw in the directory of the current file.
+function! NetrwMapping()
+    nmap <buffer> h -^                      
+    nmap <buffer> l <CR>
+
+    nmap <buffer> . gh
+    nmap <buffer> P <C-w>z
+    nmap <buffer> <leader>n :bd<CR>
+endfunction
+
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+
 
 
 "==================================各种插件设置==============================================
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Nerdtree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 设置快捷键为leader+n
-map <leader>n :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1   " 打开为文件夹时，自动开启Nerdtree
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  " vim中仅剩下Nerdtree，自动关闭
-let NERDTreeIgnore = ['\.pyc$']         " 过滤所有.pyc文件不显示,可根据需要自行添加
-let g:NERDTreeShowLineNumbers = 0       " 显示目录树行号则设置为1
-let NERDTreeWinSize = 30                " 目录树的宽度
-
-
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-            \ "Modified"  : "✹",
-            \ "Staged"    : "✚",
-            \ "Untracked" : "✭",
-            \ "Renamed"   : "➜",
-            \ "Unmerged"  : "═",
-            \ "Deleted"   : "✖",
-            \ "Dirty"     : "✗",
-            \ "Clean"     : "✔︎",
-            \ "Unknown"   : "?"
-            \ }
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
@@ -168,13 +178,12 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'                        " 文件树菜单
+" == Plugin 'scrooloose/nerdtree'                        " 文件树菜单
 Plugin 'vim-airline/vim-airline'                    " 导航栏
 Plugin 'jiangmiao/auto-pairs'                       " 括号补全
-"Plugin 'chrisbra/csv.vim'                           " 处理csv文件
 
-"Plugin 'morhetz/gruvbox'			                " 主题
+" == Theme
+"Plugin 'morhetz/gruvbox'			                
 Plugin 'rakr/vim-one'
 call vundle#end()            " 必须
 
-filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和文件类型相关脚本
