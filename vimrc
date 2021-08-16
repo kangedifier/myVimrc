@@ -18,6 +18,46 @@
 " :PluginClean      - 清除未使用插件,需要确认; 追加 `!` 自动批准移除未使用插件
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 插件管理器 bundle
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置包括vundle和初始化相关的runtime path
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+" == Plugin 'scrooloose/nerdtree'                        " 文件树菜单
+Plugin 'vim-airline/vim-airline'                    " 导航栏
+Plugin 'jiangmiao/auto-pairs'                       " 括号补全
+
+" == Theme
+"Plugin 'morhetz/gruvbox'			                
+Plugin 'rakr/vim-one'
+call vundle#end()            " 必须
+
+
+
+"==================================各种插件设置==============================================
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" airline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <c-n> :bnext<CR>
+nnoremap <c-p> :bprevious<CR>
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#enabled = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"===========================================================================================
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
@@ -144,46 +184,3 @@ augroup netrw_mapping
     autocmd!
     autocmd filetype netrw call NetrwMapping()
 augroup END
-
-
-
-"==================================各种插件设置==============================================
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" airline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <c-n> :bnext<CR>
-nnoremap <c-p> :bprevious<CR>
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#enabled = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"=============================================================================================================
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 插件管理器 bundle
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 设置包括vundle和初始化相关的runtime path
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim'
-" == Plugin 'scrooloose/nerdtree'                        " 文件树菜单
-Plugin 'vim-airline/vim-airline'                    " 导航栏
-Plugin 'jiangmiao/auto-pairs'                       " 括号补全
-
-" == Theme
-"Plugin 'morhetz/gruvbox'			                
-Plugin 'rakr/vim-one'
-call vundle#end()            " 必须
-
